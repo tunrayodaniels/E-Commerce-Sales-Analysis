@@ -1,72 +1,30 @@
 # E-Commerce Sales Performance Analysis
 
-## From messy transactional data to business insights
+## From Messy Transactional Data to Business Insights
 
 ## Project Overview
 
-What started as a messy e-commerce sales dataset became an opportunity to practice the complete data analysis process: from data cleaning and transformation to analysis, visualization, and business recommendations.
+This project analyzes an e-commerce transactional dataset to understand sales performance, identify products and categories contributing to sales, examine sales patterns, and develop data-driven recommendations.
 
-The dataset, sourced from Kaggle, contained **103 records and 11 columns** with several data quality issues, including inconsistent category values, missing data, invalid entries, negative values, and unreliable total calculations.
+The dataset was obtained from Kaggle and initially contained 103 records across 11 columns.
 
-I cleaned and transformed the dataset using **Power Query**, performed the analysis using **Power BI and DAX**, and built an interactive sales performance dashboard to answer key business questions.
+I used this dataset as a portfolio project to practice an end-to-end data analysis process, from identifying data-quality issues to cleaning, validating, analyzing, visualizing, and interpreting the results.
 
-The goal was not just to create charts, but to understand what the data was saying and translate those findings into recommendations that could potentially support better business decisions.
-
-
-## Business Problem
-
-An e-commerce business needs to understand how its sales are performing and where its revenue is coming from.
-The analysis therefore focuses on answering questions such as:
-
- ▪︎ How much revenue is being generated?
- ▪︎ How many orders and units are being sold?
- ▪︎ Which categories and products contribute most to revenue?
- ▪︎ Which months show stronger sales performance?
- ▪︎ Which payment methods generate the most revenue?
- ▪︎ What does the order status distribution reveal?
- ▪︎ Where are there opportunities that may require further investigation?
-
-
-### The 4-question framework
-I approached the project using four questions:
+### The Four question framework 
+I approached these project using four questions:
 
 1. **What is the problem?**
 2. **What metrics matter?**
-3. **What recommendation would I make?**
-4. **What potential business impact could it drive?**
+3. **What recommendations can be made?**
+4. **What could be the potential business impact?**
+This helped me to move beyond simple describing the dataset and focus in the business meaning behind the numbers 
 
-This helped me move beyond simply describing the dataset and focus on the business meaning behind the numbers.
+## 1. What Is the Problem?
 
+Before analyzing sales performance, I needed to make sure the underlying data was reliable.
+The dataset contained several inconsistencies and data-quality issues, including:
 
-## Key Performance Indicators
-After cleaning and transforming the data, the dashboard reports:
-
-KPI - Result 
-
-Total Revenue:  ₦133.93K 
-Average Order Value: ₦1.34K 
-Units Sold: 282 
-Total Orders: 100 
-
-These KPIs provide a high-level view of the sales performance captured in the dataset.
-
-
-## Data Cleaning & Transformation
-Before analyzing the data, I used **Power Query in Power BI** to identify and resolve data quality issues.
-
-The cleaning process followed:
-
-**Inspect > Identify > Validate > Correct > Recalculate > Verify**
-
-
-One principle guided the process:
-
-**Don't guess your data into being clean.**
-
-Where a value could be confidently corrected, I corrected it. Where the intended value could not be determined reliably, I retained it as null rather than introducing an unsupported assumption.
-
-### Key data quality issues identified
-
+▪︎ Duplicate transaction records
 ▪︎ Inconsistent category names and capitalization
 ▪︎ Incorrect product-category assignments
 ▪︎ Missing values
@@ -74,107 +32,218 @@ Where a value could be confidently corrected, I corrected it. Where the intended
 ▪︎ Negative quantities
 ▪︎ Invalid price entries
 ▪︎ Negative price values
-▪︎ Missing or inconsistent total values
+▪︎ Missing or inconsistent "Total" values
 ▪︎ Invalid dates
 
-### Category standardization
-The original Category field contained inconsistencies such as:
+This meant that simply importing the dataset into Power BI and building visuals could have produced misleading results.
+My first step was therefore to understand what was wrong with the data and determine what could be corrected reliably.
+
+
+## 2. Data Cleaning & Transformation
+
+I used Power Query in Power BI to clean and transform the dataset.
+
+My general approach was:
+
+**Inspect — Identify — Validate — Correct — Recalculate — Verify**
+
+One principle I followed throughout the cleaning process was:
+
+**"Don't guess your data into being clean."**
+
+If I could confidently determine the correct value, I corrected it. If I could not determine the intended value reliably, I left it as "null" instead of making an assumption.
+
+## Duplicate Records
+
+The original dataset contained 103 records.
+During the initial investigation, I found repeated transaction records involving IDs 142, 146, and 175.
+
+I did not immediately remove the repeated IDs. Instead, I compared the records to determine whether they were genuine duplicates and whether any of the values needed to be corrected first.
+
+**ID 142**: The two records contained the same transaction information but had different "Total" values.
+I checked the Total using:
+
+Total = Quantity × Price
+
+5 × ₦645.26 = ₦3,226.30
+
+The incorrect Total was corrected before the duplicate was removed.
+
+**ID 146**: The two records were completely identical across the available fields, so I treated one as a duplicate and removed it.
+
+**ID 175**: The two records contained the same transaction information but had different "Total" values.
+I validated the correct value:
+
+1 × ₦111.36 = ₦111.36
+
+The inconsistent value was corrected before the duplicate was removed. After resolving the identified duplicates, the dataset went from **103** records to **100** records.
+
+This was important because I wanted to correct inconsistent records before removing duplicates rather than simply deleting repeated IDs without investigating them.
+
+
+
+## Category Standardization & Product/Category Validation
+
+The **Category** column contained several naming and capitalization inconsistencies, including:
 
 ▪︎ Sports vs sports
-▪︎ Electronics vs electronic, electronics, ELECTRONICS, Electronicss
+▪︎ Electronics vs electronic, electronics, ELECTRONICS, Electronicss, Electronic
 
-There were also instances where products appeared under categories that did not logically match them.
-I reviewed the product-category relationships and standardized the products into five categories:
+I standardized these variations.
 
-Category | Products 
+I also found products that had been assigned to categories that did not match the product. I reviewed the product-category relationships and corrected the classifications before carrying out the category analysis.
 
-▪︎ Books | Science, Biography, Comics, Fiction 
-▪︎ Clothing | Shoes, T-shirt, Jacket, Jean 
-▪︎ Electronics | Smartphone, Laptop, Headphones, Smartwatch 
-▪︎ Home | Blender, Vacuum, Lamp, Microwave 
-▪︎ Sports | Tennis Racket, Basketball, Football, Yoga Mat 
+The final product-category mapping was:
+
+Category| Products
+Books| Science, Biography, Comics, Fiction
+Clothing| Shoes, T-shirt, Jacket, Jean
+Electronics| Smartphone, Laptop, Headphones, Smartwatch
+Home| Blender, Vacuum, Lamp, Microwave
+Sports| Tennis Racket, Basketball, Football, Yoga Mat
+
+This gave me a consistent category structure for the analysis.
 
 
-### Quantity cleaning
-The Quantity field contained missing values, negative values, and invalid text entries.
 
-For example, '4a' could not be reliably interpreted as a valid quantity, so it was treated as missing rather than guessed.
+## Quantity Cleaning
 
-After cleaning:
+The **Quantity** column contained missing values, negative values, and invalid text.
 
-▪︎ **92% valid**
-▪︎ **8% null/empty**
-▪︎ **0% errors**
-
-### Price cleaning
-The Price field contained invalid values such as:
-
-▪︎ 'abd'
-▪︎ 'four hundred'
-▪︎ '-100'
-
-Where the intended value was clear, it was corrected. For example:
-
-'four hundred' = '400'
-
-Values that could not be reliably interpreted were converted to null.
+For example, "4a" could not reliably be interpreted as a quantity, so I treated it as missing rather than guessing what the value should have been.
 
 After cleaning:
 
-▪︎ **92% valid**
-▪︎ **8% null/empty**
-▪︎ **0% errors**
+▪︎ 92% valid
+▪︎ 8% null/empty
+▪︎ 0% errors
 
-### Total calculation
-The original Total field contained missing and inconsistent values.
 
-I created a corrected total using:
+## Price Cleaning
 
-**Total = Quantity × Price**
+The "Price" column contained several invalid or questionable values, including:
 
-Where either Quantity or Price was unavailable, the calculated Total remained null rather than inventing a value.
+▪︎ "abd"
+▪︎ "four hundred"
+▪︎ "-100"
 
-The corrected values were cross-checked against the available original values.
+Where the intended value was clear, I corrected it.
+
+For example:
+
+"four hundred" => "400"
+
+Values that could not be reliably determined were converted to "null".
 
 After cleaning:
 
-▪︎ **85% valid**
-▪︎ **15% null/empty**
-▪︎ **0% errors**
+▪︎ 92% valid
+▪︎ 8% null/empty
+▪︎ 0% errors
 
-### Date cleaning
-The Order Date field contained an invalid value ('abc'), which was converted to null.
 
-Valid dates were standardized, and additional time-related fields were created for analysis, including:
+## Total Calculation & Validation
+
+The original **Total** column contained missing and inconsistent values.
+
+I validated the transaction value using:
+
+Total = Quantity × Price
+
+Where both Quantity and Price were available, I used them to validate or recalculate Total.
+
+Where either value was unavailable, I left the calculated Total as "null" rather than creating a value without sufficient evidence.
+
+After cleaning:
+
+▪︎ 85% valid
+▪︎ 15% null/empty
+▪︎ 0% errors
+
+
+## Date Cleaning
+
+The **Order Date** column contained an invalid value ("abc"), which I converted to "null".
+
+I also standardized the valid dates and created additional fields for analysis:
 
 ▪︎ Month
 ▪︎ Month Name
 ▪︎ Year
 
 
-## Analysis
-The cleaned dataset was analyzed in Power BI to understand sales performance across several dimensions.
+## 3. What Metrics Matter?
 
-### Revenue by Category
-The category analysis showed:
+After cleaning the data, I used Power BI and DAX to analyze sales performance.
 
-Category | Revenue
+Key Metrics
 
-Books: ₦40K 
+Metric| Result
+Gross Sales Value| ₦133.94K
+Estimated Realized Revenue| ₦68.51K
+Total Orders| 100
+Total Units Sold| 3,357
+Gross Average Order Value| ₦1.34K
 
-Home: ₦31K 
+## Gross Sales Value vs Estimated Realized Revenue
 
-Clothing: ₦28K 
+The ₦133.94K Gross Sales Value represents the total recorded value of transactions in the cleaned dataset, including transactions with different order statuses.
 
-Sports: ₦23K 
+This means it includes orders that were:
 
-Electronics: ₦12K 
+▪︎ Delivered
+▪︎ Shipped
+▪︎ Processing
+▪︎ Returned
+▪︎ Cancelled
 
-**Books generated the highest revenue**, while Electronics recorded the lowest category revenue in the dataset.
-Revenue was not interpreted in isolation; units sold and other dimensions were also considered to avoid making conclusions based solely on sales value.
+Because cancelled and returned orders may not represent revenue ultimately retained by the business, I calculated an additional metric:
 
-### Top 5 Products by Revenue
-The dashboard highlights the five products contributing the most revenue:
+Estimated Realized Revenue = Gross Sales Value − Returned Value − Cancelled Value»
+
+This resulted in an **Estimated Realized Revenue of ₦68.51K**
+
+I use the word estimated because the dataset does not contain detailed refund or payment-settlement information. The calculation assumes that returned and cancelled orders generated no revenue retained by the business.
+
+Gross Average Order Value
+
+I calculated Gross AOV as:
+
+Gross AOV = Gross Sales Value ÷ Total Orders
+
+₦133.94K ÷ 100 ≈ ₦1.34K
+The **Gross Average Order is ₦1.34K**
+
+Other areas I analyzed included:
+
+▪︎ Sales by Category
+▪︎ Sales by Product
+▪︎ Monthly Sales
+▪︎ Units Sold by Category
+▪︎ Sales by Order Status
+▪︎ Sales by Payment Method
+▪︎ Top 5 Products by Sales Value
+
+  
+## 4. Key Insights
+
+Category Performance
+
+Category| Recorded Sales Value
+Books| ₦40K
+Home| ₦31K
+Clothing| ₦28K
+Sports| ₦23K
+Electronics| ₦12K
+
+Books recorded the highest sales value among the five categories, while Electronics recorded the lowest.
+
+However, I did not treat sales value alone as enough evidence to make inventory decisions. Units sold, pricing, and product-level performance would also need to be considered.
+
+
+### Top 5 Products by Sales Value
+
+The five products with the highest recorded sales value were:
 
 1. Shoes
 2. Comics
@@ -182,138 +251,152 @@ The dashboard highlights the five products contributing the most revenue:
 4. Blender
 5. Science
 
-This provides a focused view of high-performing products without overcrowding the dashboard with every product.
+These products could be useful starting points for further analysis of demand, pricing, inventory availability, and promotional performance.
 
 
-### Monthly Revenue
-Monthly revenue was analyzed to identify periods of relatively stronger and weaker sales performance.
+### Monthly Sales
 
-The analysis can help identify patterns worth investigating further, particularly around:
+I analyzed monthly sales to identify periods with relatively higher and lower recorded sales.
+
+These patterns could be related to factors such as:
 
 ▪︎ Product demand
-▪︎ Order volume
+▪︎ Number of orders
 ▪︎ Product mix
 ▪︎ Pricing
-▪︎ Promotional activity
+▪︎ Promotions
 
-The observed monthly patterns should be treated as descriptive findings from this dataset rather than forecasts of future sales.
-
-
-### Revenue by Order Status
-Revenue was also examined across order statuses:
-
-Status | Revenue 
-Returned | ₦38K 
-Shipped | ₦30K 
-Cancelled | ₦27K 
-Processing | ₦25K 
-Delivered | ₦13K 
-
-One notable observation is the relatively high revenue associated with **Returned and Cancelled** orders.
-
-This does not mean that all of this revenue was ultimately realized by the business. Returned and cancelled transactions may involve refunds or reversals and therefore warrant further investigation.
-
-### Revenue by Payment Method
-Payment method performance showed approximately:
-
-Payment Method | Revenue
-Cash on Delivery | ₦44K 
-Bank Transfer | ₦42K 
-PayPal | ₦25K 
-Credit Card | ₦23K 
-
-Cash on Delivery generated the highest revenue among the payment methods represented in the dataset, followed by Bank Transfer.
+However, the dataset does not contain enough information to determine the exact reasons for the monthly changes, so I treated these as observations rather than causal conclusions.
 
 
-## Recommendations
+### Order Status
 
-Because this project uses a **Kaggle dataset rather than data provided by an actual client**, these recommendations are my few recommendations based on the patterns observed in the available
+Order Status| Recorded Sales Value
+Returned| ₦38K
+Shipped| ₦30K
+Cancelled| ₦27K
+Processing| ₦25K
+Delivered| ₦13K
 
-### 1. Investigate the drivers of strong category performance
-Books generated the highest category revenue at approximately ₦40K.
+One of the most important observations was the relatively high recorded value associated with Returned and Cancelled orders.
+This also reinforced why I separated Gross Sales Value from Estimated Realized Revenue.
+The ₦133.94K recorded sales value should not automatically be interpreted as ₦133.94K retained by the business.
 
-Rather than automatically increasing investment in the category, I would investigate the products, units sold, order volume, and pricing responsible for this performance.
 
-**Potential business impact:**  
-This could support more informed inventory and promotional decisions.
+### Payment Method
 
-### 2. Investigate the lower performance of Electronics
-Electronics generated approximately ₦12K, the lowest category revenue.
+Payment Method| Recorded Sales Value
+Cash on Delivery| ₦44K
+Bank Transfer| ₦42K
+PayPal| ₦25K
+Credit Card| ₦23K
 
-Further analysis should examine product level performance, pricing, units sold, order volume, and order outcomes before determining whether the category requires intervention.
+Cash on Delivery recorded the highest sales value, followed by Bank Transfer.
 
-**Potential business impact:**  
-This could reveal specific underperforming products or opportunities for targeted improvement.
+This could be useful when looking at customer payment preferences and the checkout experience.
 
-### 3. Investigate returned and cancelled orders
-Returned and cancelled orders represent a significant portion of the revenue values shown in the dataset.
 
-I would recommend investigating these transactions by product, category, and payment method to identify recurring patterns.
+## 5. What Recommendations Can Be Made?
 
-**Potential business impact:**  
-Identifying avoidable returns and cancellations could potentially improve realized revenue and operational efficiency.
+Based on the patterns in the cleaned dataset, I would recommend:
 
-### 4. Use stronger-performing periods to inform planning
-The monthly analysis identifies periods with relatively stronger revenue performance.
+1. Maintain focus on high-performing categories and products
+Books recorded the highest category sales value, while Shoes and Comics were among the highest-performing products.
+The business could prioritize the availability of strong-performing products while monitoring whether their performance is sustained over time.
 
-The business could investigate what products, categories, and order volumes contributed to these periods and use those findings to inform future inventory and promotional planning.
+2. Review Electronics at the product level
+Electronics recorded the lowest category sales value.
+Rather than immediately reducing the category's inventory, I would review individual Electronics products, their units sold, prices, and demand to understand what is driving the lower performance.
 
-**Potential business impact:**  
-Better planning around periods of stronger demand could improve resource allocation and product availability.
+3. Investigate returns and cancellations
+The high recorded value associated with Returned and Cancelled transactions deserves attention.
+The business should investigate the reasons behind these transactions and identify whether there are recurring issues that could be reduced.
+Reducing avoidable returns and cancellations could increase the proportion of recorded sales that becomes realized revenue.
 
-### 5. Explore opportunities to increase Average Order Value
-The average order value in the dataset is approximately ₦1.34K.
-Potential strategies such as product bundling, cross-selling, and related-product recommendations could be explored.
+4. Consider payment preferences
+Cash on Delivery recorded the highest sales value among the payment methods.
+The business could consider this pattern when reviewing its payment options and checkout experience.
 
-**Potential business impact:**  
-An increase in average order value could provide an opportunity to grow revenue without relying entirely on increasing the number of orders.
+5. Continue monitoring monthly performance
+Monthly sales should be monitored over a longer period to determine whether the stronger and weaker periods observed in this dataset are recurring patterns.
+
+This could eventually support better inventory and promotional planning.
+
+
+## 6. What Could Be the Business Impact?
+
+If these findings were validated using larger and more complete business data, they could potentially help the business:
+
+▪︎ Improve inventory allocation
+▪︎ Identify underperforming products
+▪︎ Reduce avoidable returns and cancellations
+▪︎ Improve understanding of customer payment preferences
+▪︎ Plan promotions more effectively
+▪︎ Improve sales and inventory planning
+▪︎ Make better data-informed decisions
+
+To make these recommendations actionable, additional information would be needed, such as profit margins, inventory levels, customer behavior, return reasons, cancellation reasons, marketing activity, discounts, and longer-term sales data.
 
 
 ## Dashboard
-The final Power BI dashboard provides a one page view of e-commerce sales performance.
 
-The dashboard includes:
+The final Power BI dashboard provides a one-page view of the sales performance analyzed in this project.
 
-▪︎ Total Revenue
-▪︎ Average Order Value
-▪︎ Units Sold
+Dashboard Includes
+
+▪︎ Gross Sales Value
+▪︎ Estimated Realized Revenue
+▪︎ Gross Average Order Value
+▪︎ Total Units Sold
 ▪︎ Total Orders
-▪︎ Revenue by Category
-▪︎ Monthly Revenue
+▪︎ Sales by Category
+▪︎ Monthly Sales
 ▪︎ Units Sold by Category
-▪︎ Top 5 Products by Revenue
-▪︎ Revenue by Order Status
-▪︎ Revenue by Payment Method
-▪︎ Month filter usung sloier
+▪︎ Top 5 Products by Sales Value
+▪︎ Sales by Order Status
+▪︎ Sales by Payment Method
 
-![E-Commerce Sales Performance Dashboard](ecommerce-sales-dashboard.png)
+"E-Commerce Sales Dashboard" (ecommerce-sales-dashboard.png)
+
 
 ## Tools Used
 
-**Kagggle**: Dataset source 
-**Power Query**: Data cleaning and transformation
-**Power BI**: Data visualization and dashboard development
-**DAX**: Analytical measures and calculations
+▪︎ **Kagggle**: Data source 
+▪︎ **Power Query**: Data cleaning and transformation
+▪︎ **Power BI**: Data modeling, analysis, and visualization
+▪︎ **DAX**: Measures and calculations
+▪︎ **GitHub**: Project documentation and version control
 
 
 ## Project Workflow
 
-Raw Dataset
-     |
-Data Quality Assessment
-     |
-Data Cleaning & Transformation
-     |
-Data Validation
-     |
-DAX Measures
-     |
-Exploratory Analysis
-     |
-Dashboard Development
-     |
-Insights
-     |
-Recommendations
-     |
-Potential Business Impact.
+Raw Data → Data Quality Assessment → Cleaning → Validation → Data Modeling → Analysis → Visualization → Insights → Recommendations
+
+
+## Limitations
+
+This is a portfolio project using a relatively small Kaggle dataset, rather than live business data.
+The main limitations are:
+
+▪︎ The dataset contains only 103 raw records.
+▪︎ Some values were missing or invalid and had to be retained as "null" where they could not be reliably determined.
+▪︎ Gross Sales Value includes transactions across different order statuses.
+▪︎ Estimated Realized Revenue assumes that Returned and Cancelled transactions generated no retained revenue.
+▪︎ Actual refund amounts and payment settlement information were not available.
+▪︎ The analysis is descriptive and does not establish causation.
+▪︎ The dataset is too limited to support reliable forecasting or long-term trend analysis.
+
+The recommendations should therefore be treated as initial business hypotheses that would require validation with larger and more complete business data.
+
+
+## Project Files
+
+▪︎ README.md: Project documentation
+▪︎ E-Commerce-Sales-Analysis.pbix: Power BI project file
+▪︎ ecommerce-sales-dashboard.png: Dashboard preview
+
+Conclusion
+
+This project gave me practical experience working through a messy dataset rather than starting with clean, analysis-ready data.
+The main lesson was that building a dashboard is only one part of the analysis. Understanding the quality of the data, validating questionable values, defining the right metrics, and interpreting the results are just as important.
+
