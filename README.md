@@ -13,10 +13,11 @@ I used this dataset as a portfolio project to practice an end-to-end data analys
 ### The Four question framework 
 I approached these project using four questions:
 
-1. **What is the problem?**
-2. **What metrics matter?**
-3. **What recommendations can be made?**
-4. **What could be the potential business impact?**
+1. What is the problem?
+2. What metrics matter?
+3. What recommendations can be made?
+4. What could be the potential business impact?
+   
 This helped me to move beyond simple describing the dataset and focus in the business meaning behind the numbers 
 
 ## 1. What Is the Problem?
@@ -32,7 +33,7 @@ The dataset contained several inconsistencies and data-quality issues, including
 ▪︎ Negative quantities
 ▪︎ Invalid price entries
 ▪︎ Negative price values
-▪︎ Missing or inconsistent "Total" values
+▪︎ Missing or inconsistent values
 ▪︎ Invalid dates
 
 This meant that simply importing the dataset into Power BI and building visuals could have produced misleading results.
@@ -45,13 +46,14 @@ I used Power Query in Power BI to clean and transform the dataset.
 
 My general approach was:
 
-**Inspect — Identify — Validate — Correct — Recalculate — Verify**
+**Inspect —> Identify —> Validate —> Correct —> Recalculate —> Verify**
 
 One principle I followed throughout the cleaning process was:
 
 **"Don't guess your data into being clean."**
 
 If I could confidently determine the correct value, I corrected it. If I could not determine the intended value reliably, I left it as "null" instead of making an assumption.
+
 
 ## Duplicate Records
 
@@ -81,7 +83,6 @@ The inconsistent value was corrected before the duplicate was removed. After res
 This was important because I wanted to correct inconsistent records before removing duplicates rather than simply deleting repeated IDs without investigating them.
 
 
-
 ## Category Standardization & Product/Category Validation
 
 The Category column contained several naming and capitalization inconsistencies, including:
@@ -96,6 +97,7 @@ I also found products that had been assigned to categories that did not match th
 The final product-category mapping was:
 
 Category| Products
+
 Books| Science, Biography, Comics, Fiction
 Clothing| Shoes, T-shirt, Jacket, Jean
 Electronics| Smartphone, Laptop, Headphones, Smartwatch
@@ -272,6 +274,7 @@ However, the dataset does not contain enough information to determine the exact 
 ### Order Status
 
 Order Status| Recorded Sales Value
+
 Returned| ₦38K
 Shipped| ₦30K
 Cancelled| ₦27K
@@ -286,6 +289,7 @@ The ₦133.94K recorded sales value should not automatically be interpreted as �
 ### Payment Method
 
 Payment Method| Recorded Sales Value
+
 Cash on Delivery| ₦44K
 Bank Transfer| ₦42K
 PayPal| ₦25K
