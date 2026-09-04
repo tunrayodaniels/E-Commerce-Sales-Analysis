@@ -286,8 +286,7 @@ The dashboard includes:
 ▪︎ Revenue by Payment Method
 ▪︎ Month filter usung sloier
 
-![E-Commerce Sales Performance Dashboard](screenshots/dashboard.png)
-
+![E-Commerce Sales Performance Dashboard](ecommerce-sales-dashboard.png)
 
 ## Tools Used
 
