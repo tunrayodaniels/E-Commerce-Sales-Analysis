@@ -46,7 +46,7 @@ I used Power Query in Power BI to clean and transform the dataset.
 
 My general approach was:
 
-**Inspect —> Identify —> Validate —> Correct —> Recalculate —> Verify**
+**Inspect — Identify — Validate — Correct — Recalculate — Verify**
 
 One principle I followed throughout the cleaning process was:
 
@@ -133,7 +133,7 @@ Where the intended value was clear, I corrected it.
 
 For example:
 
-"four hundred" => "400"
+"four hundred" = "400"
 
 Values that could not be reliably determined were converted to "null".
 
@@ -173,25 +173,24 @@ I also standardized the valid dates and created additional fields for analysis:
 ▪︎ Month Name
 ▪︎ Year
 
-
 ## 3. What Metrics Matter?
 
-After cleaning the data, I used Power BI and DAX to analyze sales performance.
+After cleaning and validating the data, I used Power BI and DAX to analyze sales performance and understand how cancelled and returned transactions affected the business.
 
 Key Metrics
 
 Metric| Result
 Gross Sales Value| ₦133.94K
 Estimated Realized Revenue| ₦68.51K
-Total Orders| 100
-Total Units Sold| 3,357
+Net Orders| 58
+Net Units Sold| 158
 Gross Average Order Value| ₦1.34K
 
-## Gross Sales Value vs Estimated Realized Revenue
+**Gross Sales Value vs Estimated Realized Revenue**
 
-The ₦133.94K Gross Sales Value represents the total recorded value of transactions in the cleaned dataset, including transactions with different order statuses.
+The ₦133.94K Gross Sales Value represents the total recorded value of transactions in the cleaned dataset, including transactions across different order statuses.
 
-This means it includes orders that were:
+This includes orders that were:
 
 ▪︎ Delivered
 ▪︎ Shipped
@@ -201,22 +200,45 @@ This means it includes orders that were:
 
 Because cancelled and returned orders may not represent revenue ultimately retained by the business, I calculated an additional metric:
 
-Estimated Realized Revenue = Gross Sales Value − Returned Value − Cancelled Value»
+Estimated Realized Revenue = Gross Sales Value − Returned Value − Cancelled Value
 
-This resulted in an **Estimated Realized Revenue of ₦68.51K**
+This resulted in an Estimated Realized Revenue of ₦68.51K.
 
 I use the word estimated because the dataset does not contain detailed refund or payment-settlement information. The calculation assumes that returned and cancelled orders generated no revenue retained by the business.
 
-Gross Average Order Value
+**Net Orders**
 
-I calculated Gross AOV as:
+The dataset contained 100 recorded orders, including 15 cancelled orders and 27 returned orders.
 
-Gross AOV = Gross Sales Value ÷ Total Orders
+Therefore:
 
-₦133.94K ÷ 100 ≈ ₦1.34K
-The **Gross Average Order is ₦1.34K**
+Net Orders = 100 − 15 − 27 = 58
 
-Other areas I analyzed included:
+The resulting Net Orders figure is 58, representing orders remaining after excluding cancelled and returned orders.
+
+**Net Units Sold**
+
+The dataset contained 282 gross recorded units across all order statuses.
+
+After excluding units associated with cancelled and returned orders, the resulting Net Units Sold is 158.
+
+Net Units Sold = Gross Units − Cancelled Units − Returned Units
+
+This provides a more meaningful view of the units associated with orders that were not cancelled or returned.
+
+**Gross Average Order Value**
+
+I calculated Gross AOV using the total recorded orders before excluding cancelled and returned orders:
+
+Gross AOV = Gross Sales Value ÷ Gross Orders
+
+₦133.94K ÷ 100 = ₦1.34K
+
+The Gross Average Order Value is ₦1.34K.
+
+This is labelled Gross AOV because it is based on all 100 recorded orders rather than the 58 Net Orders.
+
+Other Areas Analyzed
 
 ▪︎ Sales by Category
 ▪︎ Sales by Product
