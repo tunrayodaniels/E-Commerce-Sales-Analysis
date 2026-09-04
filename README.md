@@ -160,11 +160,15 @@ The category analysis showed:
 
 Category | Revenue
 
-Books | ₦40K 
-Home | ₦31K 
-Clothing | ₦28K 
-Sports | ₦23K 
-Electronics | ₦12K 
+Books: ₦40K 
+
+Home: ₦31K 
+
+Clothing: ₦28K 
+
+Sports: ₦23K 
+
+Electronics: ₦12K 
 
 **Books generated the highest revenue**, while Electronics recorded the lowest category revenue in the dataset.
 Revenue was not interpreted in isolation; units sold and other dimensions were also considered to avoid making conclusions based solely on sales value.
