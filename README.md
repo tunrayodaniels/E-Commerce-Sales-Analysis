@@ -84,7 +84,7 @@ This was important because I wanted to correct inconsistent records before remov
 
 ## Category Standardization & Product/Category Validation
 
-The **Category** column contained several naming and capitalization inconsistencies, including:
+The Category column contained several naming and capitalization inconsistencies, including:
 
 ▪︎ Sports vs sports
 ▪︎ Electronics vs electronic, electronics, ELECTRONICS, Electronicss, Electronic
@@ -108,7 +108,7 @@ This gave me a consistent category structure for the analysis.
 
 ## Quantity Cleaning
 
-The **Quantity** column contained missing values, negative values, and invalid text.
+The Quantity column contained missing values, negative values, and invalid text.
 
 For example, "4a" could not reliably be interpreted as a quantity, so I treated it as missing rather than guessing what the value should have been.
 
@@ -121,7 +121,7 @@ After cleaning:
 
 ## Price Cleaning
 
-The "Price" column contained several invalid or questionable values, including:
+The Price column contained several invalid or questionable values, including:
 
 ▪︎ "abd"
 ▪︎ "four hundred"
@@ -144,7 +144,7 @@ After cleaning:
 
 ## Total Calculation & Validation
 
-The original **Total** column contained missing and inconsistent values.
+The original Total column contained missing and inconsistent values.
 
 I validated the transaction value using:
 
@@ -163,7 +163,7 @@ After cleaning:
 
 ## Date Cleaning
 
-The **Order Date** column contained an invalid value ("abc"), which I converted to "null".
+The Order Date column contained an invalid value ("abc"), which I converted to "null".
 
 I also standardized the valid dates and created additional fields for analysis:
 
@@ -370,7 +370,7 @@ Dashboard Includes
 
 ## Project Workflow
 
-Raw Data → Data Quality Assessment → Cleaning → Validation → Data Modeling → Analysis → Visualization → Insights → Recommendations
+Raw Data => Data Quality Assessment => Cleaning => Validation => Data Modeling => Analysis => Visualization => Insights => Recommendations
 
 
 ## Limitations
@@ -395,7 +395,8 @@ The recommendations should therefore be treated as initial business hypotheses t
 ▪︎ E-Commerce-Sales-Analysis.pbix: Power BI project file
 ▪︎ ecommerce-sales-dashboard.png: Dashboard preview
 
-Conclusion
+
+## Conclusion
 
 This project gave me practical experience working through a messy dataset rather than starting with clean, analysis-ready data.
 The main lesson was that building a dashboard is only one part of the analysis. Understanding the quality of the data, validating questionable values, defining the right metrics, and interpreting the results are just as important.
