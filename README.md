@@ -290,7 +290,7 @@ The dashboard includes:
 
 ## Tools Used
 
-**Kagggle: Dataset source 
+**Kagggle**: Dataset source 
 **Power Query**: Data cleaning and transformation
 **Power BI**: Data visualization and dashboard development
 **DAX**: Analytical measures and calculations
